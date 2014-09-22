@@ -28,7 +28,7 @@ public class MainActivity extends Activity implements Callback, AutoFocusCallbac
 	SurfaceView surfaceview;
 	Camera camera;
 	LocationManager locationManager;
-	TextView tLongitude,tLatitude;			//經度,緯度
+	TextView tLongitude,tLatitude;			//經度 , 緯度
 	String best;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,6 @@ public class MainActivity extends Activity implements Callback, AutoFocusCallbac
         surfaceview = (SurfaceView)findViewById(R.id.surfaceView1);
         surfaceholder = surfaceview.getHolder();
         surfaceholder.addCallback(this);
-        
         //抓取對應的TextView
         tLongitude = (TextView)findViewById(R.id.textView2);
         tLatitude  = (TextView)findViewById(R.id.textView4);
@@ -52,15 +51,16 @@ public class MainActivity extends Activity implements Callback, AutoFocusCallbac
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
         
-        best = locationManager.getBestProvider(criteria, true);
-        if(best != null){
+        best = locationManager.getBestProvider(criteria, true);		
+        if(best != null)
+        {
         	Location loc = locationManager.getLastKnownLocation(best);
-        	showLocation(loc);
+        	showLocation(loc); 		//顯示經緯度
         }
-        
+        	
         
     }
-	
+    
     @Override
     protected void onResume() {
     	if(best != null){
@@ -68,16 +68,17 @@ public class MainActivity extends Activity implements Callback, AutoFocusCallbac
     	}
     	super.onResume();
     }
-    
-    
-    private void showLocation(Location loc) {
-    	if(loc != null){
-    		double latiude = loc.getLatitude();
-    		double longitude = loc.getLongitude();
-    		tLatitude.setText(latiude+"");
-    		tLongitude.setText(longitude+"");
-    		Toast.makeText(this, "is Update", Toast.LENGTH_SHORT).show();
-    	}
+	private void showLocation(Location loc) {
+		if(loc != null)
+		{
+			double latitude = loc.getLatitude();
+			double longitude = loc.getLongitude();
+			tLatitude.setText(latitude+"");
+			tLongitude.setText(longitude+"");
+			Toast.makeText(this, "is Update", Toast.LENGTH_SHORT).show();
+		}
+			
+			
 	}
 	@Override
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
@@ -113,26 +114,26 @@ public class MainActivity extends Activity implements Callback, AutoFocusCallbac
 	}
 
 	@Override
-	public void onLocationChanged(Location arg0) {
+	public void onLocationChanged(Location location) {
 		// 當位置發生改變時
-		showLocation(arg0);
+		showLocation(location);
 	}
 
 	@Override
-	public void onProviderDisabled(String arg0) {
-		// 當關閉位置供應器時
-		
-	}
-
-	@Override
-	public void onProviderEnabled(String arg0) {
-		// 當啟用位置供應器時
-		
-	}
-
-	@Override
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+	public void onStatusChanged(String provider, int status, Bundle extras) {
 		// 當定位狀態改變時
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// 當起用位置供應器時
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// 當關閉位置供應器時
 		
 	}
 
